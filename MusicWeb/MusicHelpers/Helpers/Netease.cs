@@ -18,7 +18,7 @@ namespace MusicHelpers.Helpers
         //static string e = "010001";
         //static string f = "00e0b509f6259df8642dbc35662901477df22677ec152b5ff68ace615bb7b725152b3ab17a876aea8a5aa76d2e417629ec4ee341f56135fccf695280104e0312ecbda92557c93870114af6c9d05c4f7f0c3685b7a46bee255932575cce10b424d813cfe4875d3e82047b97ddef52741d546b8e289dc6935b3ece0462db0a22b8e7";
         static string g = "0CoJUm6Qyw8W8jud";
-        
+
         //public static string GetSongByIdR(int id)
         //{//"http://music.163.com/song/media/outer/url?id="+ id+".mp3"
         //    string url = "https://music.163.com/weapi/song/enhance/player/url"; /*HTTP/1.1*/
@@ -45,7 +45,8 @@ namespace MusicHelpers.Helpers
                 build += ids[i] + ",";
             }
             build += ids[ids.Length - 1];
-            string d = "{\"ids\":\"[" + build + "]\",\"br\":128000}";
+            //音质320000,192000,128000//未登录（的cookie）默认128000
+            string d = "{\"ids\":\"[" + build + "]\",\"br\":320000}";
             string songsInfoJson = Request(url, d);
 
             return songsInfoJson;
@@ -53,7 +54,7 @@ namespace MusicHelpers.Helpers
         public static string GetLrcR(string id)
         {
             string url = "https://music.163.com/weapi/song/lyric";
-            string d = "{\"id\":\""+id+"\",\"lv\":1}";
+            string d = "{\"id\":\"" + id + "\",\"lv\":1}";
             //string d = "{\"id\":\""+id+"\",\"lv\":1,\"tv\":-1,\"csrf_token\":\"\"}";
             string lrcInfo = Request(url, d);
             return lrcInfo;
@@ -69,24 +70,33 @@ namespace MusicHelpers.Helpers
                 build += "{\\\"id\\\":\\\"" + ids[i] + "\\\"},";
             }
             build += "{\\\"id\\\":\\\"" + ids[ids.Length - 1] + "\\\"}";
-            string d = "{\"c\":\"["+build+"]\"}";
+            string d = "{\"c\":\"[" + build + "]\"}";
             string detail = Request(url, d);
             return detail;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="d">参数的一部分(处理前)</param>
+        /// <returns></returns>
         public static string Request(string url, string d)
         {
             using (WebClient wc = new WebClient())
             {    //https://music.163.com/weapi/song/enhance/player/url 请求头 上的cookies
-                //用会员登录后的cookies，可以听付费的，但怕被封 还是用未登录时的吧
-                wc.Headers.Add(HttpRequestHeader.Cookie, "_iuqxldmzr_=32; _ntes_nnid=cfb20d675b37ef82883687bed10b0f68,1533467251037; _ntes_nuid=cfb20d675b37ef82883687bed10b0f68; WM_TID=TkaWyJQS0UM8cqq7iCxEIqBzpfEF9AMQ; usertrack=ezq0pFuHk1U3p4UQBckbAg==; __f_=1535854971328; vjuids=737ea9cc5.1659fcb94f8.0.908420a2b47f7; vjlast=1535984244.1535984244.30; vinfo_n_f_l_n3=954b8e5bcd63e6d7.1.0.1535984243979.0.1535984250209; hb_MA-9ADA-91BF1A6C9E06_source=www.google.com; mp_MA-9ADA-91BF1A6C9E06_hubble=%7B%22sessionReferrer%22%3A%20%22https%3A%2F%2Fcampus.163.com%2Fapp%2Fhy%2Flh%22%2C%22updatedTime%22%3A%201536561490090%2C%22sessionStartTime%22%3A%201536560972018%2C%22sendNumClass%22%3A%20%7B%22allNum%22%3A%203%2C%22errSendNum%22%3A%200%7D%2C%22deviceUdid%22%3A%20%220e9c86ef-0338-4c3d-a87f-b67f20309fc8%22%2C%22persistedTime%22%3A%201536560972009%2C%22LASTEVENT%22%3A%20%7B%22eventId%22%3A%20%22da_screen%22%2C%22time%22%3A%201536561490091%7D%2C%22sessionUuid%22%3A%20%228a2f1ffb-4854-4b86-aed8-dfc7ce8a8baf%22%7D; JSESSIONID-WYYY=cha43%2FRsDSXxlmmRXHImTjszy%5C0d9A6GspWI523%5CfNYMXp2p2sIHCd3XUzcvJfPeTA2bvbNskphV8jNt%2Bf7u5HThbbBT5O2aRuvQ0Qq%2FOYf9J00Vxu4uAFYpbkO%5CQNcxs9X%2BEMSwvbjErSSxEWmK7iT0CQyFBj%5C68n4k1ZlW6JZ1P%5CBp%3A1537349540539; WM_NI=t68UQyVGA1HnMmYeOy5xEFAEsZqBCjWXLH33l3NVuYkSLTkeghn6u%2Bf5lwEw1pK0Kw6JIkfhV2U7sDqUj2k2AvmusKEvIZUQXvaXGK9SBZpvknDpQiV8MRzyX3VwMONtalE%3D; WM_NIKE=9ca17ae2e6ffcda170e2e6eeb7fb5b919dfea6ec3bb1adaf92d54d8fa69789ca53f78781a3b421a1afbc91ec2af0fea7c3b92ab8eaf8b6d47396998fd2cb668fb39786ce73f7a88ba7c44fb186bfa3c262958884a9b239b0ed82b7f853a98d84b5ea6fa5b8a2d7f821a6eba498c87df3b085d1ca7df696878ce56496ee9bd8f250b38ba6d3ea3a83aaa396f24187aa87bbd85b9caaafb9c641fb8d8ebbf37ea9b28c91d46396e883b3f9739ced9a98d0458eacaf8dc837e2a3");
+                //用会员登录后的cookie，可以听付费的,以及高音质的(参数见GetSongsByIds)
+                //登录后的cookie
+                wc.Headers.Add(HttpRequestHeader.Cookie, "_iuqxldmzr_=32; _ntes_nnid=cfb20d675b37ef82883687bed10b0f68,1533467251037; _ntes_nuid=cfb20d675b37ef82883687bed10b0f68; WM_TID=TkaWyJQS0UM8cqq7iCxEIqBzpfEF9AMQ; usertrack=ezq0pFuHk1U3p4UQBckbAg==; __f_=1535854971328; vjuids=737ea9cc5.1659fcb94f8.0.908420a2b47f7; vjlast=1535984244.1535984244.30; vinfo_n_f_l_n3=954b8e5bcd63e6d7.1.0.1535984243979.0.1535984250209; hb_MA-9ADA-91BF1A6C9E06_source=www.google.com; mp_MA-9ADA-91BF1A6C9E06_hubble=%7B%22sessionReferrer%22%3A%20%22https%3A%2F%2Fcampus.163.com%2Fapp%2Fhy%2Flh%22%2C%22updatedTime%22%3A%201536561490090%2C%22sessionStartTime%22%3A%201536560972018%2C%22sendNumClass%22%3A%20%7B%22allNum%22%3A%203%2C%22errSendNum%22%3A%200%7D%2C%22deviceUdid%22%3A%20%220e9c86ef-0338-4c3d-a87f-b67f20309fc8%22%2C%22persistedTime%22%3A%201536560972009%2C%22LASTEVENT%22%3A%20%7B%22eventId%22%3A%20%22da_screen%22%2C%22time%22%3A%201536561490091%7D%2C%22sessionUuid%22%3A%20%228a2f1ffb-4854-4b86-aed8-dfc7ce8a8baf%22%7D; JSESSIONID-WYYY=TQQ9bIrd%5CQ%2Bqj3t5pcopWPwIgRS%5CJ5lGaCkt6DDXD4PAqJTI%5CjslxMu6CbTmQ0xv%5CB%5CwWu5d6bhnCYv3cpn568Yohtx9378nbJVtZ208QiDfiK6baVSkujKMeNec6t9U06%2BpcTJGgJr9Cxd4JIFlmnFWINMfHTGXNOTQ7vHpRPFnsG4R%3A1537630574662; WM_NI=hRxME9cxpdiqsdv6I2%2FUDkIpuWmINoJcXMPy2BP1h578CDhBudgdgsxP6tRuxiCY7MNCxg%2Bfu6DAjXJ18c2%2BkAA0AXvYrG1KZ%2Fo%2F%2Ba7Nk%2Brn8dxHWiGn8xtkKHDJyx9QUDU%3D; WM_NIKE=9ca17ae2e6ffcda170e2e6eed1aa34989397d5ef3e90ac8fa3c15f929a8aabb75c928a89d6f6428ebabb8fb42af0fea7c3b92aac8eb8aec833a1a8c085ec7bb1bcbad7cc3aed8b8c8ccc7cb789a3aacd658abd98aed373f29ea0d2eb3ff5e88da5eb4ab7bca985e679bc90fa95d17fbcb78dbab6478e9db888aa6eb7ea8ca2e9548aeff884b121a99f8fd1c454b687bea8b4419af1a1d0aa6bf592a5ccf166fcbcb8a9d66385b2f899f76189988cabfc74fb8f9ba5d837e2a3; MUSIC_U=ed1915b8f807cf57e8bba163df7a3d2400ec98c750c4dc8d9c5b83adc37b556200d1fd47290bb9976d074933016702947955a739ab43dce1; __remember_me=true; __csrf=020e15deeb55d81f24706d413a70bdbc");
+                //未登录的cookie
+               // wc.Headers.Add(HttpRequestHeader.Cookie, "_iuqxldmzr_=32; _ntes_nnid=cfb20d675b37ef82883687bed10b0f68,1533467251037; _ntes_nuid=cfb20d675b37ef82883687bed10b0f68; WM_TID=TkaWyJQS0UM8cqq7iCxEIqBzpfEF9AMQ; usertrack=ezq0pFuHk1U3p4UQBckbAg==; __f_=1535854971328; vjuids=737ea9cc5.1659fcb94f8.0.908420a2b47f7; vjlast=1535984244.1535984244.30; vinfo_n_f_l_n3=954b8e5bcd63e6d7.1.0.1535984243979.0.1535984250209; hb_MA-9ADA-91BF1A6C9E06_source=www.google.com; mp_MA-9ADA-91BF1A6C9E06_hubble=%7B%22sessionReferrer%22%3A%20%22https%3A%2F%2Fcampus.163.com%2Fapp%2Fhy%2Flh%22%2C%22updatedTime%22%3A%201536561490090%2C%22sessionStartTime%22%3A%201536560972018%2C%22sendNumClass%22%3A%20%7B%22allNum%22%3A%203%2C%22errSendNum%22%3A%200%7D%2C%22deviceUdid%22%3A%20%220e9c86ef-0338-4c3d-a87f-b67f20309fc8%22%2C%22persistedTime%22%3A%201536560972009%2C%22LASTEVENT%22%3A%20%7B%22eventId%22%3A%20%22da_screen%22%2C%22time%22%3A%201536561490091%7D%2C%22sessionUuid%22%3A%20%228a2f1ffb-4854-4b86-aed8-dfc7ce8a8baf%22%7D; JSESSIONID-WYYY=cha43%2FRsDSXxlmmRXHImTjszy%5C0d9A6GspWI523%5CfNYMXp2p2sIHCd3XUzcvJfPeTA2bvbNskphV8jNt%2Bf7u5HThbbBT5O2aRuvQ0Qq%2FOYf9J00Vxu4uAFYpbkO%5CQNcxs9X%2BEMSwvbjErSSxEWmK7iT0CQyFBj%5C68n4k1ZlW6JZ1P%5CBp%3A1537349540539; WM_NI=t68UQyVGA1HnMmYeOy5xEFAEsZqBCjWXLH33l3NVuYkSLTkeghn6u%2Bf5lwEw1pK0Kw6JIkfhV2U7sDqUj2k2AvmusKEvIZUQXvaXGK9SBZpvknDpQiV8MRzyX3VwMONtalE%3D; WM_NIKE=9ca17ae2e6ffcda170e2e6eeb7fb5b919dfea6ec3bb1adaf92d54d8fa69789ca53f78781a3b421a1afbc91ec2af0fea7c3b92ab8eaf8b6d47396998fd2cb668fb39786ce73f7a88ba7c44fb186bfa3c262958884a9b239b0ed82b7f853a98d84b5ea6fa5b8a2d7f821a6eba498c87df3b085d1ca7df696878ce56496ee9bd8f250b38ba6d3ea3a83aaa396f24187aa87bbd85b9caaafb9c641fb8d8ebbf37ea9b28c91d46396e883b3f9739ced9a98d0458eacaf8dc837e2a3");
                 //wc.Headers.Add(HttpRequestHeader.Referer, "https://music.163.com/");
                 wc.Headers.Add(HttpRequestHeader.ContentType, "application/x-www-form-urlencoded");
                 //wc.Headers.Add(HttpRequestHeader.ContentLength, "412");
                 //wc.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/69.0.3497.100 Safari/537.36");
                 //wc.Headers.Add("Origin", "https://music.163.com");
                 //wc.Headers.Add(HttpRequestHeader.KeepAlive, "True");
-                string h = EncryptHelper.AesEncrypt(d, g);
-                string param = EncryptHelper.AesEncrypt(h, i);
+                string h = NeteaseEncryptHelper.AesEncrypt(d, g);
+                string param = NeteaseEncryptHelper.AesEncrypt(h, i);
                 param = HttpUtility.UrlEncode(param);
                 string myParameters = "params=" + param + "&" + "encSecKey=" + encSecKey;
                 //myParameters = "params=ovej7TkHiTCtM7raDtVCmxJXontP%2FynUonCQZrN6SeJ%2BXm%2F%2FPgORcE4KPkLqfHTSntkCpUoEmTQf1VHwqUOA4H0zHP0C9hJvQODqNPFvwVpVYZdCyhS5OrbP89JBP5AtsocRUybxQk%2F5MzLKsU%2F5iQ%3D%3D&encSecKey=89356a0b76edf4d371b8d7d324b41364de5737cdb4d0ad42454fddfaa7b5ba3e71c556b25c0f51088431ba5934929b4f38b89e4ad362389f0e2b3151b43a477682edde022ba38dcbe2cf2f38065fdf0b468b07d9f0661b6d836f34b6416e67515c67f9438bb519cfc3cc7f55e86669e882aa43d8aacf28de50eef17b2586fcc9";
@@ -112,7 +122,7 @@ namespace MusicHelpers.Helpers
             return GetSongsByIds(ids.ToArray());
         }
 
-        public override MusicInfo[] GetSongById(int id)
+        public override MusicInfo[] GetSongById(string id)
         {
             throw new NotImplementedException();
         }
@@ -123,30 +133,31 @@ namespace MusicHelpers.Helpers
             string detailsJson = GetDetailsR(ids);
             jo = JObject.Parse(detailsJson);
             foreach (var detail in jo["songs"].Children())
-            { string id = detail["id"].ToString();
+            {
+                string id = detail["id"].ToString();
                 misDict.Add(id, new MusicInfo()
                 {
                     type = "netease",
                     link = "https://music.163.com/#/song?id=" + id,
                     title = detail["name"].ToString(),
-                    songid = id ,
+                    songid = id,
                     //pic = detail["picUrl"].ToString(),
                 });
-                misDict[id].pic = detail["al"]["picUrl"].ToString()+ "?param=300x300";
+                misDict[id].pic = detail["al"]["picUrl"].ToString() + "?param=300x300";
                 string authors = "";
                 foreach (var author in detail["ar"].Children())
                 {
                     authors += author["name"].ToString() + ",";
                 }
-                authors = authors.Substring(0, authors.Length - 1);
-                misDict[id].author = authors;
+                // authors = authors.Substring(0, authors.Length - 1);
+                misDict[id].author = authors.Substring(0, authors.Length - 1);
             }
             string songsJson = GetSongsByIdsR(ids);
             //{0}为null时的检测
             jo = JObject.Parse(songsJson);
             foreach (var data in jo["data"].Children())
             {
-               if(data["url"].ToString() == "")
+                if (data["url"].ToString() == "")
                 {
                     return null;
                 }
@@ -162,16 +173,24 @@ namespace MusicHelpers.Helpers
                 //}
                 //string str = jo["sgc"].ToString();
                 //bool bo = jo["sgc"].ToString() == "true";
-                misDict[id].lrc = jo["sgc"].ToString().Equals("False")?jo["lrc"]["lyric"].ToString():"";
+                try
+                {
+                    misDict[id].lrc = jo["sgc"].ToString().Equals("False") ? jo["lrc"]["lyric"].ToString() : "";
+                }
+                catch
+                {
+
+                    misDict[id].lrc = "";
+                }
             }
 
-            MusicInfo[] musicInfo = new MusicInfo[ids.Length];
-            int i = 0;
-            foreach (MusicInfo mi in misDict.Values)
-            {
-                musicInfo[i++] = mi; 
-            }
-            return musicInfo;
+            //MusicInfo[] musicInfo = new MusicInfo[ids.Length];
+            //int i = 0;
+            //foreach (MusicInfo mi in misDict.Values)
+            //{
+            //    musicInfo[i++] = mi; 
+            //}
+            return misDict.Values.ToArray();
         }
     }
 }

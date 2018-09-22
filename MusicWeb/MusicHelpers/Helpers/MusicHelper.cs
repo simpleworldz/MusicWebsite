@@ -11,7 +11,7 @@ namespace MusicHelpers.Helpers
     {
         static MusicHelper mh;
         public abstract MusicInfo[] Search(string name, int page) ;
-        public abstract MusicInfo[] GetSongById(int id);
+        public abstract MusicInfo[] GetSongById(string id);
         public static MusicInfo[] GetSongByUrl(string uri)
         {//https://music.163.com/#/song?id=223779
             Match netease = Regex.Match(uri, "\\S+163.com\\S+id=(\\d+)");

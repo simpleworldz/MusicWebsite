@@ -10,3 +10,15 @@ E:\Web\CoreEmpty\MusicHelpers\obj\Debug\netcoreapp2.1\MusicHelpers.dll
 E:\Web\CoreEmpty\MusicHelpers\obj\Debug\netcoreapp2.1\MusicHelpers.pdb
 E:\Web\CoreEmpty\MusicHelpers\obj\Debug\netcoreapp2.1\MusicHelpers.csprojAssemblyReference.cache
 E:\Web\CoreEmpty\MusicHelpers\obj\Debug\netcoreapp2.1\MusicHelpers.csproj.CopyComplete
+E:\Web\MusicWeb\MusicWeb\MusicHelpers\bin\Debug\netcoreapp2.1\MusicHelpers.deps.json
+E:\Web\MusicWeb\MusicWeb\MusicHelpers\bin\Debug\netcoreapp2.1\MusicHelpers.runtimeconfig.json
+E:\Web\MusicWeb\MusicWeb\MusicHelpers\bin\Debug\netcoreapp2.1\MusicHelpers.runtimeconfig.dev.json
+E:\Web\MusicWeb\MusicWeb\MusicHelpers\bin\Debug\netcoreapp2.1\MusicHelpers.dll
+E:\Web\MusicWeb\MusicWeb\MusicHelpers\bin\Debug\netcoreapp2.1\MusicHelpers.pdb
+E:\Web\MusicWeb\MusicWeb\MusicHelpers\obj\Debug\netcoreapp2.1\MusicHelpers.csprojAssemblyReference.cache
+E:\Web\MusicWeb\MusicWeb\MusicHelpers\obj\Debug\netcoreapp2.1\MusicHelpers.csproj.CoreCompileInputs.cache
+E:\Web\MusicWeb\MusicWeb\MusicHelpers\obj\Debug\netcoreapp2.1\MusicHelpers.AssemblyInfoInputs.cache
+E:\Web\MusicWeb\MusicWeb\MusicHelpers\obj\Debug\netcoreapp2.1\MusicHelpers.AssemblyInfo.cs
+E:\Web\MusicWeb\MusicWeb\MusicHelpers\obj\Debug\netcoreapp2.1\MusicHelpers.csproj.CopyComplete
+E:\Web\MusicWeb\MusicWeb\MusicHelpers\obj\Debug\netcoreapp2.1\MusicHelpers.dll
+E:\Web\MusicWeb\MusicWeb\MusicHelpers\obj\Debug\netcoreapp2.1\MusicHelpers.pdb

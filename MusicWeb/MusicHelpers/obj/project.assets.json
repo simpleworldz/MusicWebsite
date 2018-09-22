@@ -687,11 +687,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Web\\CoreEmpty\\MusicHelpers\\MusicHelpers.csproj",
+      "projectUniqueName": "E:\\Web\\MusicWeb\\MusicWeb\\MusicHelpers\\MusicHelpers.csproj",
       "projectName": "MusicHelpers",
-      "projectPath": "E:\\Web\\CoreEmpty\\MusicHelpers\\MusicHelpers.csproj",
+      "projectPath": "E:\\Web\\MusicWeb\\MusicWeb\\MusicHelpers\\MusicHelpers.csproj",
       "packagesPath": "C:\\Users\\zhen\\.nuget\\packages\\",
-      "outputPath": "E:\\Web\\CoreEmpty\\MusicHelpers\\obj\\",
+      "outputPath": "E:\\Web\\MusicWeb\\MusicWeb\\MusicHelpers\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

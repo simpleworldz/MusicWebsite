@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MusicHelpers.Helpers
 {
-    public class EncryptHelper
+    public class NeteaseEncryptHelper
     {
         public static string AesEncrypt(string plaintextData, string key, string iv = "0102030405060708")
         {

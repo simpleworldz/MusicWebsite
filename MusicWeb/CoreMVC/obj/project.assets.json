@@ -12243,11 +12243,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Web\\CoreEmpty\\CoreMVC\\CoreMVC.csproj",
+      "projectUniqueName": "E:\\Web\\MusicWeb\\MusicWeb\\CoreMVC\\CoreMVC.csproj",
       "projectName": "CoreMVC",
-      "projectPath": "E:\\Web\\CoreEmpty\\CoreMVC\\CoreMVC.csproj",
+      "projectPath": "E:\\Web\\MusicWeb\\MusicWeb\\CoreMVC\\CoreMVC.csproj",
       "packagesPath": "C:\\Users\\zhen\\.nuget\\packages\\",
-      "outputPath": "E:\\Web\\CoreEmpty\\CoreMVC\\obj\\",
+      "outputPath": "E:\\Web\\MusicWeb\\MusicWeb\\CoreMVC\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -12266,8 +12266,8 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "E:\\Web\\CoreEmpty\\MusicHelpers\\MusicHelpers.csproj": {
-              "projectPath": "E:\\Web\\CoreEmpty\\MusicHelpers\\MusicHelpers.csproj"
+            "E:\\Web\\MusicWeb\\MusicWeb\\MusicHelpers\\MusicHelpers.csproj": {
+              "projectPath": "E:\\Web\\MusicWeb\\MusicWeb\\MusicHelpers\\MusicHelpers.csproj"
             }
           }
         }
