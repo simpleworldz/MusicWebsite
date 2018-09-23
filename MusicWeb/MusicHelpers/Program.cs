@@ -9,10 +9,10 @@ namespace MusicHelpers
         static void Main(string[] args)
         {
             #region netease test
-           // MusicHelper mh = new Netease();
+            // MusicHelper mh = new Netease();
             ////mh.GetSongById(513360721);
             ////mh.Search("我是", 1);
-           // Netease.GetLrcR("513360721");
+            // Netease.GetLrcR("513360721");
             //// Netease.GetDetail(513360721);
 
             ////Netease.GetDetailsR(new string[] { "513360721", "1311076476" });
@@ -24,7 +24,9 @@ namespace MusicHelpers
             // QQ.GetSongByIdR("002B2EAA3brD5b");
             //QQ.GetMusicInfo(new string[] { "002B2EAA3brD5b", "002RkFPr1R58Z8" });
             //QQ.GetLrcBySongid("5219940");
-            QQ.GetSongById("002B2EAA3brD5b");
+            // QQ.GetSongById("002B2EAA3brD5b");
+            //QQ.SearchR("五月天", 1);
+            qq.Search("五月天", 2);
             // Console.WriteLine(re);
             //Console.ReadKey();
             #region qq test

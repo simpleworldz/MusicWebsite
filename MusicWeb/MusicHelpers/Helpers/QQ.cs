@@ -32,14 +32,24 @@ namespace MusicHelpers.Helpers
                 string xmlStr = wc.DownloadString(url + param);
                 XmlDocument xml = new XmlDocument();
                 xml.LoadXml(xmlStr);
-                string key = xml["command-lable-xwl78-qq-music"]["cmd"]["info"].Attributes["key"].Value;
-                return key;
+                return xml["command-lable-xwl78-qq-music"]["cmd"]["info"].Attributes["key"].Value;
+               
             }
         }
-        //public static string SearchR(string name,int page)
-        //{
-            
-        //}
+        public static string SearchR(string name, int page)
+        {
+            using (WebClient wc = new WebClient())
+            {
+                wc.Headers.Add(HttpRequestHeader.UserAgent, "Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1");
+                // wc.Headers.Add(HttpRequestHeader.Referer, "https://m.y.qq.com/");
+                wc.Headers.Add(HttpRequestHeader.Referer, "http://m.y.qq.com/");
+                string url = "http://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp?";
+               // string url = "https://c.y.qq.com/soso/fcgi-bin/client_search_cp?";
+                string param = "w=" + HttpUtility.UrlEncode(name) + "&n=10&format=json&p=" + page;
+                return  wc.DownloadString(url + param);
+                
+            }
+        }
         public static string GetSongByIdR(string id)
         {
             string[] quality = { "M800", "M500", "C400" };
@@ -119,8 +129,8 @@ namespace MusicHelpers.Helpers
                 string url = "https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric.fcg?";
                 string param = "nobase64=1&musicid=" + songid;
                 wc.Headers.Add(HttpRequestHeader.Referer, "https://y.qq.com/n/yqq/song");
-                string lrcStr = wc.DownloadString(url + param);
-                return lrcStr;
+                return wc.DownloadString(url + param);
+                
             }
         }
        /// <summary>
@@ -152,14 +162,16 @@ namespace MusicHelpers.Helpers
             {
                 authors += author["name"].ToString() + ",";
             }
+            string subTitle = MIJo["songsubtitle"].ToString();
+            subTitle = subTitle==""? "" : string.Format("({0})", subTitle);
             MusicInfo mi = new MusicInfo()
             {
                 songid = id,
                 pic = "https://y.gtimg.cn/music/photo_new/T002R300x300M000" + MIJo["albummid"].ToString() + ".jpg",
                 link = "https://y.qq.com/n/yqq/song/" + id + ".html",
                 type = "qq",
-                title = MIJo["songtitle"].ToString()+string.Format("({0})",MIJo["songsubtitle"].ToString()),
-                author = authors.Substring(0,authors.Length - 1)
+                title = MIJo["songtitle"].ToString(),
+                author = authors.Substring(0,authors.Length - 1)+subTitle,
             };
             mi.url = GetSongByIdR(id);
             string lrcStr= GetLrcBySongid(songid);
@@ -167,11 +179,18 @@ namespace MusicHelpers.Helpers
             return mi;
         }
 
-   
+
 
         public override MusicInfo[] Search(string name, int page)
         {
-            throw new NotImplementedException();
+            string searchResult = SearchR(name, page);
+            JObject jo = JObject.Parse(searchResult);
+            List<string> songmids = new List<string>();
+            foreach (var song in jo["data"]["song"]["list"].Children())
+            {
+                songmids.Add(song["songmid"].ToString());
+            }
+            return GetSongsByIds(songmids.ToArray());
         }
 
         public override MusicInfo[] GetSongsByIds(string[] ids)
