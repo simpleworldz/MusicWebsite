@@ -297,9 +297,9 @@ $(function() {
               if (page === 1) {
                   var err = '(°ー°〃) 出了点小问题，请重试';
                  //调试时先不用
-                //if (t === 'timeout') {
-                //  err = '(°ー°〃) 请求超时了，请稍后重试';
-                //}
+                if (t === 'timeout') {
+                  err = '(°ー°〃) 请求超时了，请稍后重试';
+                }
                 $('#j-input')
                   .closest('.am-form-group')
                   .find('.am-alert')
