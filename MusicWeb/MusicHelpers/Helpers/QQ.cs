@@ -10,7 +10,7 @@ using System.Xml;
 namespace MusicHelpers.Helpers
 {
 
-    //id = songmid;  songid = songid
+    //id = songmid
     public class QQ : MusicHelper
     {
         static string vkey;
@@ -127,12 +127,12 @@ namespace MusicHelpers.Helpers
         /// </summary>
         /// <param name="songid">songid(返回的html页面中的参数）</param>
         /// <returns></returns>
-        public static string GetLrcBySongid(string songid)
+        public static string GetLrcById(string id)
         {
             using (WebClient wc = new WebClient())
             {
                 string url = "https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric.fcg?";
-                string param = "nobase64=1&musicid=" + songid;
+                string param = "nobase64=1&songmid=" + id;
                 wc.Headers.Add(HttpRequestHeader.Referer, "https://y.qq.com/n/yqq/song");
                 return wc.DownloadString(url + param);
 
@@ -161,7 +161,7 @@ namespace MusicHelpers.Helpers
             string htmlPage = GetMusicInfo(id);
             Match musicInfoMat = Regex.Match(htmlPage, "var g_SongData = (.+);");
             JObject MIJo = JObject.Parse(musicInfoMat.Groups[1].Value);
-            string songid = MIJo["songid"].ToString();
+           // string songid = MIJo["songid"].ToString();
             string authors = "";
             foreach (var author in MIJo["singer"].Children())
             {
@@ -177,7 +177,7 @@ namespace MusicHelpers.Helpers
                 author = authors.Substring(0, authors.Length - 1) ,
             };
             mi.url = GetSongByIdR(id);
-            string lrcStr = GetLrcBySongid(songid);
+            string lrcStr = GetLrcById(id);
             mi.lrc = GetLrc(lrcStr);
             return mi;
         }
@@ -192,7 +192,10 @@ namespace MusicHelpers.Helpers
             foreach (var song in jo["data"]["song"]["list"].Children())
             {
                 string songmid = song["songmid"].ToString();
-                string songid = song["songid"].ToString();
+                //string songid = song["songid"].ToString();
+                string songUrl = GetSongByIdR(songmid);
+                string lrcStr = GetLrcById(songmid);
+                lrcStr = GetLrc(lrcStr);
                 string authors = "";
                 foreach (var author in song["singer"].Children())
                 {
@@ -205,11 +208,11 @@ namespace MusicHelpers.Helpers
                     link = "https://y.qq.com/n/yqq/song/" + songmid + ".html",
                     type = "qq",
                     title = song["songname"].ToString(),
-                    author = authors.Substring(0, authors.Length - 1) ,
+                    author = authors.Substring(0, authors.Length - 1),
+                    url = songUrl,
+                    lrc = lrcStr
                 };
-                mi.url = GetSongByIdR(songmid);
-                string lrcStr = GetLrcBySongid(songid);
-                mi.lrc = GetLrc(lrcStr);
+                
                 mis.Add(mi);
             }
             return mis.ToArray();

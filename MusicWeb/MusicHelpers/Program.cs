@@ -22,9 +22,10 @@ namespace MusicHelpers
             #region qq test
             MusicHelper qq = new QQ();
             //string re = QQ.GetSongByIdR("002B2EAA3brD5b");
-           QQ.GetSongByIdR("002B2EAA3brD5b");
+          // QQ.GetSongByIdR("002B2EAA3brD5b");
             //QQ.GetMusicInfo(new string[] { "002B2EAA3brD5b", "002RkFPr1R58Z8" });
             //QQ.GetLrcBySongid("5219940");
+          //string l=  QQ.GetLrcById("002B2EAA3brD5b");
             // QQ.GetSongById("002B2EAA3brD5b");
             //QQ.SearchR("五月天", 1);
             //qq.Search("五月天", 2);
