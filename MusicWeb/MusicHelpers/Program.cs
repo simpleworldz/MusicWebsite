@@ -9,10 +9,10 @@ namespace MusicHelpers
         static void Main(string[] args)
         {
             #region netease test
-            // MusicHelper mh = new Netease();
+            //MusicHelper mh = new Netease();
             ////mh.GetSongById(513360721);
-            ////mh.Search("我是", 1);
-            // Netease.GetLrcR("513360721");
+            //mh.Search("我是", 1);
+            //Netease.GetLrcR("513360721");
             //// Netease.GetDetail(513360721);
 
             ////Netease.GetDetailsR(new string[] { "513360721", "1311076476" });
@@ -20,9 +20,9 @@ namespace MusicHelpers
             //mh.Search("我是", 1);
             #endregion 
             #region qq test
-            // MusicHelper qq = new QQ();
+            MusicHelper qq = new QQ();
             //string re = QQ.GetSongByIdR("002B2EAA3brD5b");
-            // QQ.GetSongByIdR("002B2EAA");
+           QQ.GetSongByIdR("002B2EAA3brD5b");
             //QQ.GetMusicInfo(new string[] { "002B2EAA3brD5b", "002RkFPr1R58Z8" });
             //QQ.GetLrcBySongid("5219940");
             // QQ.GetSongById("002B2EAA3brD5b");
@@ -53,12 +53,12 @@ namespace MusicHelpers
             //Console.WriteLine("complete!");
             //Console.ReadKey();
             #endregion
-            WebClient wc = new WebClient();
-            wc.DownloadString("https://y.qq.com/n/yqq/song/000eXvbv2GXLdW.html");
-            string cookies = wc.ResponseHeaders[HttpRequestHeader.Cookie];
-            string server = wc.ResponseHeaders["server"];
-            wc.Dispose();
-          string str =   wc.DownloadString("https://y.qq.com/n/yqq/song/000eXvbv2GXLdW.html");
+          //  WebClient wc = new WebClient();
+          //  wc.DownloadString("https://y.qq.com/n/yqq/song/000eXvbv2GXLdW.html");
+          //  string cookies = wc.ResponseHeaders[HttpRequestHeader.Cookie];
+          //  string server = wc.ResponseHeaders["server"];
+          //  wc.Dispose();
+          //string str =   wc.DownloadString("https://y.qq.com/n/yqq/song/000eXvbv2GXLdW.html");
             //CookieContainer cookie = new CookieContainer();
 
         }

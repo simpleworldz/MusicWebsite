@@ -21,4 +21,3 @@ E:\Web\MusicWeb\MusicWeb\MusicHelpers\obj\Debug\netcoreapp2.1\MusicHelpers.Assem
 E:\Web\MusicWeb\MusicWeb\MusicHelpers\obj\Debug\netcoreapp2.1\MusicHelpers.csproj.CopyComplete
 E:\Web\MusicWeb\MusicWeb\MusicHelpers\obj\Debug\netcoreapp2.1\MusicHelpers.dll
 E:\Web\MusicWeb\MusicWeb\MusicHelpers\obj\Debug\netcoreapp2.1\MusicHelpers.pdb
-E:\Web\MusicWeb\MusicWeb\MusicHelpers\obj\Debug\netcoreapp2.1\MusicHelpers.csprojAssemblyReference.cache

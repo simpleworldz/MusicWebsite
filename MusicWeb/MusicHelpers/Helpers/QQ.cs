@@ -67,10 +67,14 @@ namespace MusicHelpers.Helpers
                     string url = "http://dl.stream.qqmusic.qq.com/";
                     string param = "vkey=" + vkey + "&guid=5150825362&fromtag=1";
                     string urlAll = url + quality[i] + id + ".mp3?" + param;
-                WebRequest request = WebRequest.Create(urlAll);
+               HttpWebRequest  request = (HttpWebRequest)WebRequest.Create(urlAll);
+                request.AddRange(1);
+                //request.Method = "HEAD";
                 try
                 {
-                    request.GetResponse();
+                    HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                   request.Abort();
+                    response.Close();
                     return urlAll;
                 }
                 catch

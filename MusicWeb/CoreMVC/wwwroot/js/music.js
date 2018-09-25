@@ -152,7 +152,8 @@ $(function() {
         var ajax = function ajax(input, filter, type, page) {
           $.ajax({
             type: 'POST',
-            url: getUrl(),
+              url: getUrl(),
+            //感觉太大了
             timeout: 30000,
             data: {
               input: input,
