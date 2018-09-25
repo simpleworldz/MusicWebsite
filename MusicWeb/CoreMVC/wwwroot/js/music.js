@@ -153,8 +153,8 @@ $(function() {
           $.ajax({
             type: 'POST',
               url: getUrl(),
-            //感觉太大了
-            timeout: 30000,
+            //感觉太大了改为20000吧 
+            timeout: 20000,
             data: {
               input: input,
               filter: filter,

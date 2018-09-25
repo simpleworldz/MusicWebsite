@@ -42,7 +42,15 @@ namespace CoreMVC.Controllers
             MusicInfo[] mis =   MusicHelper.Call(data.Input, data.Type, data.Filter, data.Page);
             //Dictionary<string, MusicInfo[]> dict = new Dictionary<string, MusicInfo[]>();
             //dict.Add("data", mis);
-            Data da = new Data() {data = mis, code = 200, error = "" };
+            Data da = null;
+            if (mis != null)
+            {
+            da =  new Data() {data = mis, code = 200, error = "" };
+            }
+            else
+            {
+              da =   new Data() { data = null, code = 404, error = "ㄟ( ▔, ▔ )ㄏ 没有找到相关信息" };
+            }
             return Json(da);
         }
 

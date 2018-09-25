@@ -129,6 +129,10 @@ namespace MusicHelpers.Helpers
             JObject jo;
             string detailsJson = GetDetailsR(ids);
             jo = JObject.Parse(detailsJson);
+            if (jo["code"].ToString().Equals("400"))
+            {
+                return null;
+            }
             foreach (var detail in jo["songs"].Children())
             {
                 string id = detail["id"].ToString();

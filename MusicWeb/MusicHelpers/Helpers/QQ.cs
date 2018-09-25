@@ -1,9 +1,11 @@
 ﻿using Newtonsoft.Json.Linq;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Web;
 using System.Xml;
 
@@ -14,9 +16,13 @@ namespace MusicHelpers.Helpers
     public class QQ : MusicHelper
     {
         static string vkey;
+        static Dictionary<string, string> songUrlDict;
+        static Dictionary<string, string> songLrcDict;
         public QQ()
         {
             vkey = GetVkey();
+            songUrlDict = new Dictionary<string, string>();
+            songLrcDict = new Dictionary<string, string>();
         }
         //MC的方法
         public static string GetVkey()
@@ -50,32 +56,33 @@ namespace MusicHelpers.Helpers
 
             }
         }
-        public static string GetSongByIdR(string id)
+        public static void GetSongByIdR(string id)
         {
             //音质
             string[] quality = { "M800", "M500", "C400" };
-            
-                for (int i = 0; i < quality.Length; i++)
-                {
 
-                    //貌似要会员的vkey才能下载高音质？
-                    //虽然每次的请求中vkey都改变，但经测试，vkey都使用同一个也行
-                    //不不 vkey 会变的，只是一段时间没变，后来会变的，还是用GetVkey方法吧
-                    //string url = "http://183.252.54.24/amobile.music.tc.qq.com/" + quality[i] + id + ".mp3?vkey=93E5392730956D2839AFF7F19920427925C340B93F3D722EBCC8D73FF050EDCFC9D50B5D6A3BA122F094BF370B88E2F24097820E09002FF0&guid=5150825362&fromtag=1";
-                    //string url = "http://dl.stream.qqmusic.qq.com/" + quality[i] + id + ".mp3?vkey=93E5392730956D2839AFF7F19920427925C340B93F3D722EBCC8D73FF050EDCFC9D50B5D6A3BA122F094BF370B88E2F24097820E09002FF0&guid=5150825362&fromtag=1";
-                    //string url = "http://183.252.54.24/amobile.music.tc.qq.com/";
-                    string url = "http://dl.stream.qqmusic.qq.com/";
-                    string param = "vkey=" + vkey + "&guid=5150825362&fromtag=1";
-                    string urlAll = url + quality[i] + id + ".mp3?" + param;
-               HttpWebRequest  request = (HttpWebRequest)WebRequest.Create(urlAll);
+            for (int i = 0; i < quality.Length; i++)
+            {
+
+                //貌似要会员的vkey才能下载高音质？
+                //虽然每次的请求中vkey都改变，但经测试，vkey都使用同一个也行
+                //不不 vkey 会变的，只是一段时间没变，后来会变的，还是用GetVkey方法吧
+                //string url = "http://183.252.54.24/amobile.music.tc.qq.com/" + quality[i] + id + ".mp3?vkey=93E5392730956D2839AFF7F19920427925C340B93F3D722EBCC8D73FF050EDCFC9D50B5D6A3BA122F094BF370B88E2F24097820E09002FF0&guid=5150825362&fromtag=1";
+                //string url = "http://dl.stream.qqmusic.qq.com/" + quality[i] + id + ".mp3?vkey=93E5392730956D2839AFF7F19920427925C340B93F3D722EBCC8D73FF050EDCFC9D50B5D6A3BA122F094BF370B88E2F24097820E09002FF0&guid=5150825362&fromtag=1";
+                //string url = "http://183.252.54.24/amobile.music.tc.qq.com/";
+                string url = "http://dl.stream.qqmusic.qq.com/";
+                string param = "vkey=" + vkey + "&guid=5150825362&fromtag=1";
+                string urlAll = url + quality[i] + id + ".mp3?" + param;
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlAll);
                 request.AddRange(1);
                 //request.Method = "HEAD";
                 try
                 {
                     HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                   request.Abort();
+                    request.Abort();
                     response.Close();
-                    return urlAll;
+                    songUrlDict.Add(id, urlAll);
+                    return;
                 }
                 catch
                 {
@@ -84,7 +91,7 @@ namespace MusicHelpers.Helpers
                 //这个这么慢，怕是下载下来了？
                 //wc.DownloadString(urlAll);
             }
-            return "";
+           songUrlDict.Add(id, "");
         }
         #region test1
         //这个可以多个一起  然而是mv的
@@ -127,15 +134,15 @@ namespace MusicHelpers.Helpers
         /// </summary>
         /// <param name="songid">songid(返回的html页面中的参数）</param>
         /// <returns></returns>
-        public static string GetLrcById(string id)
+        public static void GetLrcById(string id)
         {
             using (WebClient wc = new WebClient())
             {
                 string url = "https://c.y.qq.com/lyric/fcgi-bin/fcg_query_lyric.fcg?";
                 string param = "nobase64=1&songmid=" + id;
                 wc.Headers.Add(HttpRequestHeader.Referer, "https://y.qq.com/n/yqq/song");
-                return wc.DownloadString(url + param);
-
+                string lrcStr = wc.DownloadString(url + param);
+                songLrcDict.Add(id, GetLrc(lrcStr));
             }
         }
         /// <summary>
@@ -154,14 +161,24 @@ namespace MusicHelpers.Helpers
                 return HttpUtility.HtmlDecode(lrcStr);
 
             }
-            return null;
+            return "";
         }
         public static MusicInfo GetSongById(string id)
         {
+            var getUrl = Task.Run(() => { GetSongByIdR(id); });
+            var getLrc = Task.Run(() => { GetLrcById(id); });
             string htmlPage = GetMusicInfo(id);
             Match musicInfoMat = Regex.Match(htmlPage, "var g_SongData = (.+);");
+            if (musicInfoMat.Groups.Count == 1)
+            {
+                return null;
+            }
             JObject MIJo = JObject.Parse(musicInfoMat.Groups[1].Value);
-           // string songid = MIJo["songid"].ToString();
+            if (MIJo["mid"].ToString().Equals(""))
+            {
+                return null;
+            }
+            // string songid = MIJo["songid"].ToString();
             string authors = "";
             foreach (var author in MIJo["singer"].Children())
             {
@@ -174,11 +191,11 @@ namespace MusicHelpers.Helpers
                 link = "https://y.qq.com/n/yqq/song/" + id + ".html",
                 type = "qq",
                 title = MIJo["songtitle"].ToString(),
-                author = authors.Substring(0, authors.Length - 1) ,
+                author = authors.Substring(0, authors.Length - 1),
             };
-            mi.url = GetSongByIdR(id);
-            string lrcStr = GetLrcById(id);
-            mi.lrc = GetLrc(lrcStr);
+            Task.WaitAll(getUrl, getLrc);
+            mi.url = songUrlDict[id];
+            mi.lrc = songLrcDict[id];
             return mi;
         }
 
@@ -188,20 +205,36 @@ namespace MusicHelpers.Helpers
         {
             string searchResult = SearchR(name, page);
             JObject jo = JObject.Parse(searchResult);
-            List<MusicInfo> mis = new List<MusicInfo>();
-            foreach (var song in jo["data"]["song"]["list"].Children())
+            var songs = jo["data"]["song"]["list"].Children();
+            if (songs.Count() == 0)
+            {
+                return null;
+            }
+            List<Task> taskList = new List<Task>();
+            Dictionary<string, MusicInfo> mis = new Dictionary<string, MusicInfo>();
+            var getUrlLrc = Task.Run(() =>
+            {
+                foreach (var song in songs)
+                {
+                    string songmid = song["songmid"].ToString();
+                  taskList.Add(Task.Run(() => { GetSongByIdR(songmid); }));
+                  taskList.Add(Task.Run(() => { GetLrcById(songmid); }));
+
+                }
+            });
+            foreach (var song in songs)
             {
                 string songmid = song["songmid"].ToString();
                 //string songid = song["songid"].ToString();
-                string songUrl = GetSongByIdR(songmid);
-                string lrcStr = GetLrcById(songmid);
-                lrcStr = GetLrc(lrcStr);
+                //string songUrl = GetSongByIdR(songmid);
+                //string lrcStr = GetLrcById(songmid);
+                //lrcStr = GetLrc(lrcStr);
                 string authors = "";
                 foreach (var author in song["singer"].Children())
                 {
                     authors += author["name"].ToString() + ",";
                 }
-                MusicInfo mi = new MusicInfo()
+                mis.Add(songmid, new MusicInfo()
                 {
                     songid = songmid,
                     pic = "https://y.gtimg.cn/music/photo_new/T002R300x300M000" + song["albummid"].ToString() + ".jpg",
@@ -209,15 +242,21 @@ namespace MusicHelpers.Helpers
                     type = "qq",
                     title = song["songname"].ToString(),
                     author = authors.Substring(0, authors.Length - 1),
-                    url = songUrl,
-                    lrc = lrcStr
-                };
-                
-                mis.Add(mi);
+                    //url = songUrl,
+                    //lrc = lrcStr
+                });
             }
-            return mis.ToArray();
+            Task.WaitAll(getUrlLrc);
+            Task.WaitAll(taskList.ToArray());
+            foreach (string id in mis.Keys)
+            {
+                mis[id].url = songUrlDict[id];
+                mis[id].lrc = songLrcDict[id];
+            }
+            return mis.Values.ToArray();
         }
 
+        //传入的string[]长度都是1
         public override MusicInfo[] GetSongsByIds(string[] ids)
         {
             MusicInfo[] mis = new MusicInfo[ids.Length];
@@ -225,7 +264,7 @@ namespace MusicHelpers.Helpers
             {
                 mis[i] = GetSongById(ids[i]);
             }
-            return mis;
+            return mis[0] == null?null:mis;
         }
     }
 }
