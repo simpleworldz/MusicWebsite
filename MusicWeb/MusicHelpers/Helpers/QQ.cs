@@ -91,7 +91,7 @@ namespace MusicHelpers.Helpers
                 //这个这么慢，怕是下载下来了？
                 //wc.DownloadString(urlAll);
             }
-           songUrlDict.Add(id, "");
+            songUrlDict.Add(id, "");
         }
         #region test1
         //这个可以多个一起  然而是mv的
@@ -163,7 +163,7 @@ namespace MusicHelpers.Helpers
             }
             return "";
         }
-        public static MusicInfo GetSongById(string id)
+        public override MusicInfo[] GetSongById(string id)
         {
             var getUrl = Task.Run(() => { GetSongByIdR(id); });
             var getLrc = Task.Run(() => { GetLrcById(id); });
@@ -193,10 +193,12 @@ namespace MusicHelpers.Helpers
                 title = MIJo["songtitle"].ToString(),
                 author = authors.Substring(0, authors.Length - 1),
             };
+            MusicInfo[] mis = new MusicInfo[1];
             Task.WaitAll(getUrl, getLrc);
             mi.url = songUrlDict[id];
             mi.lrc = songLrcDict[id];
-            return mi;
+            mis[0] = mi;
+            return mis;
         }
 
 
@@ -217,8 +219,8 @@ namespace MusicHelpers.Helpers
                 foreach (var song in songs)
                 {
                     string songmid = song["songmid"].ToString();
-                  taskList.Add(Task.Run(() => { GetSongByIdR(songmid); }));
-                  taskList.Add(Task.Run(() => { GetLrcById(songmid); }));
+                    taskList.Add(Task.Run(() => { GetSongByIdR(songmid); }));
+                    taskList.Add(Task.Run(() => { GetLrcById(songmid); }));
 
                 }
             });
@@ -256,15 +258,9 @@ namespace MusicHelpers.Helpers
             return mis.Values.ToArray();
         }
 
-        //传入的string[]长度都是1
         public override MusicInfo[] GetSongsByIds(string[] ids)
         {
-            MusicInfo[] mis = new MusicInfo[ids.Length];
-            for (int i = 0; i < ids.Length; i++)
-            {
-                mis[i] = GetSongById(ids[i]);
-            }
-            return mis[0] == null?null:mis;
+            throw new NotImplementedException();
         }
     }
 }

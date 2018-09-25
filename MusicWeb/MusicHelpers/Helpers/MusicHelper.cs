@@ -11,7 +11,8 @@ namespace MusicHelpers.Helpers
     {
         static MusicHelper mh;
         public abstract MusicInfo[] Search(string name, int page) ;
-       // public abstract MusicInfo GetSongById(string id);
+        //这虽然id只有一个，但还是转为数组
+        public abstract MusicInfo[] GetSongById(string id);
         public abstract MusicInfo[] GetSongsByIds(string[] ids);
         public static MusicInfo[] GetSongByUrl(string uri)
         {//https://music.163.com/#/song?id=223779
@@ -49,7 +50,7 @@ namespace MusicHelpers.Helpers
                 case "name":
                     return mh.Search(input, page);
                 case "id":
-                    return mh.GetSongsByIds(new string[] { input });
+                    return mh.GetSongById(input);
             }
             return null;
         }

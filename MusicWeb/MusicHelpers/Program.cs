@@ -9,8 +9,8 @@ namespace MusicHelpers
         static void Main(string[] args)
         {
             #region netease test
-            //MusicHelper mh = new Netease();
-            ////mh.GetSongById(513360721);
+            MusicHelper mh = new Netease();
+            mh.GetSongById("021");
             //mh.Search("我是", 1);
             //Netease.GetLrcR("513360721");
             //// Netease.GetDetail(513360721);
@@ -20,14 +20,14 @@ namespace MusicHelpers
             //mh.Search("我是", 1);
             #endregion 
             #region qq test
-            MusicHelper qq;
+          //MusicHelper qq;
             //string re = QQ.GetSongByIdR("002B2EAA3brD5b");
             // QQ.GetSongByIdR("002B2EAA3brD5b");
             //QQ.GetMusicInfo(new string[] { "002B2EAA3brD5b", "002RkFPr1R58Z8" });
             //QQ.GetLrcBySongid("5219940");
             //string l=  QQ.GetLrcById("002B2EAA3brD5b");
-            qq = new QQ();
-             qq.GetSongsByIds(new string[] { "002B2EAA3brD5b" });
+            //qq = new QQ();
+            // qq.GetSongsByIds(new string[] { "002B2EAA3brD5b" });
             //QQ.SearchR("五月天", 1);
             //for (int i = 1; i < 10; i++)
             //{   qq= new QQ();
@@ -36,7 +36,7 @@ namespace MusicHelpers
             //}
             
             // Console.WriteLine(re);
-            Console.ReadKey();
+            //Console.ReadKey();
             #endregion 
             #region qq test2
             //string url1 = "http://dl.stream.qqmusic.qq.com/M800002RkFPr1R58Z8.mp3?vkey=0DF2A36C7EB8D45E426E65B4FE288CC081FD3845296081255CDC6EA547408EFA8692E49CEAA01299012628FA6C8408FA9DF3E1A81754E6D7&guid=5150825362&fromtag=";

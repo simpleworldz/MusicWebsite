@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -124,9 +125,28 @@ namespace MusicHelpers.Helpers
         }
 
         public override MusicInfo[] GetSongsByIds(string[] ids)
-        {
-            Dictionary<string, MusicInfo> misDict = new Dictionary<string, MusicInfo>();
+        {   
             JObject jo;
+            Dictionary<string, string> lrcDict = new Dictionary<string, string>();
+            List<Task> taskList = new List<Task>();
+            foreach (string id in ids)
+            {
+                taskList.Add(Task.Run(() =>
+                {
+                    string lrcJson = GetLrcR(id);
+                    jo = JObject.Parse(lrcJson);
+                    try
+                    {
+                        lrcDict.Add(id, jo["lrc"]["lyric"].ToString());
+                    }
+                    catch
+                    {
+
+                        lrcDict.Add(id, "");
+                    }
+                }));
+            }
+            Dictionary<string, MusicInfo> misDict = new Dictionary<string, MusicInfo>();
             string detailsJson = GetDetailsR(ids);
             jo = JObject.Parse(detailsJson);
             if (jo["code"].ToString().Equals("400"))
@@ -164,25 +184,10 @@ namespace MusicHelpers.Helpers
                 }
                 misDict[data["id"].ToString()].url = data["url"].ToString();
             }
+            Task.WaitAll(taskList.ToArray());
             foreach (string id in ids)
             {
-                string lrcJson = GetLrcR(id);
-                jo = JObject.Parse(lrcJson);
-                //if (jo["sgc"].ToString() != "true")
-                //{
-                //misDict[id].lrc = jo["lrc"]["lyric"].ToString();
-                //}
-                //string str = jo["sgc"].ToString();
-                //bool bo = jo["sgc"].ToString() == "true";
-                try
-                {
-                    misDict[id].lrc = jo["sgc"].ToString().Equals("False") ? jo["lrc"]["lyric"].ToString() : "";
-                }
-                catch
-                {
-
-                    misDict[id].lrc = "";
-                }
+                misDict[id].lrc = lrcDict[id];
             }
 
             //MusicInfo[] musicInfo = new MusicInfo[ids.Length];
@@ -192,6 +197,15 @@ namespace MusicHelpers.Helpers
             //    musicInfo[i++] = mi; 
             //}
             return misDict.Values.ToArray();
+        }
+
+        public override MusicInfo[] GetSongById(string id)
+        {
+            if (Regex.IsMatch(id,"^\\d+$"))
+            {
+            return GetSongsByIds(new string[] { id });
+            }
+            return null;
         }
     }
 }
