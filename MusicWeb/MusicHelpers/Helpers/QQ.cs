@@ -248,7 +248,7 @@ namespace MusicHelpers.Helpers
                     //lrc = lrcStr
                 });
             }
-            Task.WaitAll(getUrlLrc);
+            getUrlLrc.Wait();
             Task.WaitAll(taskList.ToArray());
             foreach (string id in mis.Keys)
             {
