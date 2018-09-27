@@ -14,18 +14,23 @@ namespace MusicHelpers.Helpers
         //这虽然id只有一个，但还是转为数组
         public abstract MusicInfo[] GetSongById(string id);
         public abstract MusicInfo[] GetSongsByIds(string[] ids);
-        public static MusicInfo[] GetSongByUrl(string uri)
+        public static MusicInfo[] GetSongByUrl(string url)
         {//https://music.163.com/#/song?id=223779
-            Match netease = Regex.Match(uri, "\\S+163.com\\S+id=(\\d+)");
+            Match netease = Regex.Match(url, "\\S+163.com\\S+id=(\\d+)");
             if(netease.Success)
             {
                 return Call(netease.Groups[1].Value, "netease", "id");
             }
             //https://y.qq.com/n/yqq/song/003SeXGZ1JUtaX.html
-            Match qq = Regex.Match(uri, "\\S+qq.com\\S+song/(.+)[.]html");
+            Match qq = Regex.Match(url, "\\S+qq.com\\S+song/(.+)[.]html");
             if (qq.Success)
             {
                 return Call(qq.Groups[1].Value, "qq", "id");
+            }
+            Match kugou = Regex.Match(url, "\\S+kugou.com\\S+song/#hash=(\\w+)");
+            if (kugou.Success)
+            {
+                return Call(kugou.Groups[1].Value, "kugou", "id");
             }
             return null;
 
@@ -43,6 +48,9 @@ namespace MusicHelpers.Helpers
                     break;
                 case "qq":
                     mh = new QQ();
+                    break;
+                case "kugou":
+                    mh = new Kugou();
                     break;
             }
             switch(filter)

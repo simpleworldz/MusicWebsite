@@ -8,6 +8,7 @@ namespace MusicHelpers
     {
         static void Main(string[] args)
         {
+            MusicHelper mh;
             #region netease test
             //MusicHelper mh = new Netease();
             //mh.GetSongById("021");
@@ -60,6 +61,7 @@ namespace MusicHelpers
             //Console.WriteLine("complete!");
             //Console.ReadKey();
             #endregion
+            #region test
             //  WebClient wc = new WebClient();
             //  wc.DownloadString("https://y.qq.com/n/yqq/song/000eXvbv2GXLdW.html");
             //  string cookies = wc.ResponseHeaders[HttpRequestHeader.Cookie];
@@ -67,15 +69,21 @@ namespace MusicHelpers
             //  wc.Dispose();
             //string str =   wc.DownloadString("https://y.qq.com/n/yqq/song/000eXvbv2GXLdW.html");
             //CookieContainer cookie = new CookieContainer();
-            HttpParams hp = new HttpParams();
-            //hp.Url = "https://music.163.com/#/song";
-            //hp.Data = "id=492151019";
-            hp.Url = "https://www.baidu.com/";
-            string str = HttpHelper.GetAsync(hp).Result;
-            string str1 = HttpHelper.GetAsync(hp).Result;
+            //HttpParams hp = new HttpParams();
+            ////hp.Url = "https://music.163.com/#/song";
+            ////hp.Data = "id=492151019";
+            //hp.Url = "https://www.baidu.com/";
+            //string str = HttpHelper.GetAsync(hp).Result;
+            //string str1 = HttpHelper.GetAsync(hp).Result;
             //hp.Url = "https://music.163.com/weapi/song/enhance/player/url";
             //hp.Data = "params=A1keA%2FsfVh9A7X3J0ntclJHHkz2X%2FhVigSxhnlwckMkUd%2BQ84w9XNIi4DUJahtOnwgQ%2BqNQd4eJ5PQ7fR9ToEa3u5BSvcu8eu00n%2B66IHsObhavrzwKf5%2BKVfXpck4qfixcGMokcXpDyi2WpfjZG2w%3D%3D&encSecKey=0c5fa5062c7a95315f52fbd586db8086159e5ac2141b81793ffb48bd55418384a8b6f884ea6ec16fbc55efbbad705c06b66844feb584ead64353ee04abfc5fc36008688bb9102f6eb52ab0248d83222f49a45618c396a6a5cfb2d2e7812caaa70a29a9c2c29441b725cba66818e83a74178153db5048950fe37b2ce73b2687a3";
             //string str = HttpHelper.HttpRequestAsync(hp).Result;
+            #endregion
+            mh = new Kugou();
+            //mh.GetSongById("08228af3cb404e8a4e7e9871bf543ff6");
+            //mh.GetSongById("63414fd91ac2ef376cdd574209a5bf5e");
+            mh.Search("63414fd91ac2ef376cdd574209a5bf5e", 1);
+            // string str = Kugou.GetLrcR("08228af3cb404e8a4e7e9871bf543ff6").Result;
         }
     }
 }

@@ -37,9 +37,15 @@ namespace MusicHelpers.Helpers
             //myStreamReader.Close();
             //myResposeStream.Close();
         }
-        public static async Task<string> GetAsync(HttpParams hp)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="hp"></param>
+        /// <param name="connect">连接字符 ？ or #</param>
+        /// <returns></returns>
+        public static async Task<string> GetAsync(HttpParams hp,string connect = "?")
         {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(hp.Url + "?" + hp.Data);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(hp.Url + connect + hp.Data);
             request.Method = "GET";
             request.ContentType = "text/html;charset=UTF-8";
             request.Headers.Add(HttpRequestHeader.UserAgent, hp.Agent);

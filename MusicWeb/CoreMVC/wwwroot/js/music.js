@@ -274,7 +274,8 @@ $(function() {
                 player.on('ended', function() {
                   document.title = siteTitle;
                 });
-                if (result.data.length < 10) {
+                  //这个...
+                if (result.data.length < 5) {
                   $more.hide();
                 } else {
                   $more.text('载入更多');
