@@ -9,7 +9,7 @@ namespace MusicHelpers.Helpers
 {
     class Kugou : MusicHelper
     {
-        public static async Task<string> GetSongByIdR(string id)
+        public static async Task<string> GetSongByIdRAsync(string id)
         {
             HttpParams hp = new HttpParams()
             {
@@ -19,7 +19,7 @@ namespace MusicHelpers.Helpers
             };
             return await HttpHelper.GetAsync(hp);
         }
-        public static async Task<string> SearchR(string name, int page)
+        public static async Task<string> SearchRAsync(string name, int page)
         {
             HttpParams hp = new HttpParams()
             {
@@ -34,7 +34,7 @@ namespace MusicHelpers.Helpers
             };
             return await HttpHelper.GetAsync(hp);
         }
-        public static async Task<string> GetLrcR(string id)
+        public static async Task<string> GetLrcRAsync(string id)
         {
             HttpParams hp = new HttpParams()
             {
@@ -54,8 +54,8 @@ namespace MusicHelpers.Helpers
             List<MusicInfo> mis = new List<MusicInfo>();
             foreach (string id in ids)
             {
-                Task<string> songRes = GetSongByIdR(id);
-                Task<string> songLrc = GetLrcR(id);
+                Task<string> songRes = GetSongByIdRAsync(id);
+                Task<string> songLrc = GetLrcRAsync(id);
                 JObject jo = JObject.Parse(songRes.Result);
                 if (!jo["error"].ToString().Equals(""))
                 {
@@ -78,13 +78,13 @@ namespace MusicHelpers.Helpers
 
         public override MusicInfo[] Search(string name, int page)
         {
-            string str = SearchR(name, page).Result;
-            JObject jo = JObject.Parse(SearchR(name, page).Result);
+            string str = SearchRAsync(name, page).Result;
+            JObject jo = JObject.Parse(SearchRAsync(name, page).Result);
             var infos = jo["data"]["lists"].Children();
             List<string> ids = new List<string>();
             foreach (var info in infos)
             {
-                //SQFileHash,HQFileHash,FileHash
+                //{--}SQFileHash,HQFileHash,FileHash
                 ids.Add(info["FileHash"].ToString());
             } 
             return GetSongsByIds(ids.ToArray());
