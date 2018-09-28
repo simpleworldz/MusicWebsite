@@ -1,4 +1,5 @@
 ﻿using MusicHelpers.Helpers;
+using MusicHelpers.Type;
 using System;
 using System.Net;
 
@@ -8,7 +9,7 @@ namespace MusicHelpers
     {
         static void Main(string[] args)
         {
-            MusicHelper mh;
+            Music mh;
             #region netease test
             //MusicHelper mh = new Netease();
             //mh.GetSongById("021");

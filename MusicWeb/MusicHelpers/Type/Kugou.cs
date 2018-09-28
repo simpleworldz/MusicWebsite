@@ -1,13 +1,15 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using MusicHelpers.Helpers;
+using MusicHelpers.Model;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace MusicHelpers.Helpers
+namespace MusicHelpers.Type
 {
-    class Kugou : MusicHelper
+    class Kugou : Music
     {
         public static async Task<string> GetSongByIdRAsync(string id)
         {
@@ -85,7 +87,9 @@ namespace MusicHelpers.Helpers
             foreach (var info in infos)
             {
                 //{--}SQFileHash,HQFileHash,FileHash
-                ids.Add(info["FileHash"].ToString());
+                //ids.Add(info["FileHash"].ToString());
+                //没有登录，即使..也..
+                ids.Add(info["HQFileHash"] == null || info["HQFileHash"].ToString().Equals("") ? info["FileHash"].ToString() : info["HQFileHash"].ToString());
             } 
             return GetSongsByIds(ids.ToArray());
         }

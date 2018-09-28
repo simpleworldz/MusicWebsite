@@ -8,12 +8,14 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Xml;
+using MusicHelpers.Helpers;
+using MusicHelpers.Model;
 
-namespace MusicHelpers.Helpers
+namespace MusicHelpers.Type
 {
 
     //id = songmid
-    public class QQ : MusicHelper
+    public class QQ : Music
     {
         static string vkey;
         public QQ()

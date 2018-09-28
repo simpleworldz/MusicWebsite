@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace MusicHelpers.Helpers
+namespace MusicHelpers.Model
 {
     public class MusicInfo
     {//$radio_songs[] = [

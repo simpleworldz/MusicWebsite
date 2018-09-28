@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using CoreMVC.Models;
 using Microsoft.AspNetCore.Mvc;
 using MusicHelpers.Helpers;
+using MusicHelpers.Model;
 
 namespace CoreMVC.Controllers
 {
@@ -16,7 +17,8 @@ namespace CoreMVC.Controllers
             {
                 {"netease", "网易" },
                 { "qq", "ＱＱ"},
-                {"kugou", "酷狗"}
+                {"kugou", "酷狗"},
+                {"xiami","虾米" }
             };
             //musicTypeList.Add("kuwo", "酷我");
             //musicTypeList.Add("xiami", "虾米");
@@ -45,7 +47,7 @@ namespace CoreMVC.Controllers
             //MusicHelper mh = new Netease();
             //string result = mh.SearchR(data.Input, data.Page);
             //JsonResult info = Json(result);
-            MusicInfo[] mis =   MusicHelper.Call(data.Input, data.Type, data.Filter, data.Page);
+            MusicInfo[] mis = MusicHelpers.Type.Music.Call(data.Input, data.Type, data.Filter, data.Page);
             //Dictionary<string, MusicInfo[]> dict = new Dictionary<string, MusicInfo[]>();
             //dict.Add("data", mis);
             if (mis == null)

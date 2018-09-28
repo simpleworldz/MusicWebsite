@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using MusicHelpers.Helpers;
+using MusicHelpers.Model;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -8,9 +10,10 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace MusicHelpers.Helpers
+namespace MusicHelpers.Type
 {
-    public class Netease : MusicHelper
+    //最先写的,没用上HttpHelp
+    public class Netease : Music
     {
         //参考 https://www.zhanghuanglong.com/detail/csharp-version-of-netease-cloud-music-api-analysis-(with-source-code)
         //d e f g... 皆为网易云js 上的参数名称

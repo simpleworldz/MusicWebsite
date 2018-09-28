@@ -25,6 +25,8 @@ namespace CoreMVC
         //这里可以设置config
         public void ConfigureServices(IServiceCollection services)
         {
+            //缓存机制 https://docs.microsoft.com/en-us/aspnet/core/performance/caching/memory?view=aspnetcore-2.1 服务器，浏览器
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -46,7 +48,7 @@ namespace CoreMVC
             //    app.UseHsts();
             //}
 
-            //这个。。
+            //...
             //app.UseHttpsRedirection();
             app.UseStaticFiles();
             //app.UseCookiePolicy();

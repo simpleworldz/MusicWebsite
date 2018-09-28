@@ -1,19 +1,21 @@
-﻿using System;
+﻿using MusicHelpers.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace MusicHelpers.Helpers
+namespace MusicHelpers.Type
 {
-    public abstract class MusicHelper
+    public abstract class Music
     {
-        static MusicHelper mh;
+        static Music mh;
         public abstract MusicInfo[] Search(string name, int page) ;
         //这虽然id只有一个，但还是转为数组
         public abstract MusicInfo[] GetSongById(string id);
         public abstract MusicInfo[] GetSongsByIds(string[] ids);
+        //public abstract string SearchRAsync(string name, int page);
         public static MusicInfo[] GetSongByUrl(string url)
         {//https://music.163.com/#/song?id=223779
             Match netease = Regex.Match(url, "\\S+163.com\\S+id=(\\d+)");

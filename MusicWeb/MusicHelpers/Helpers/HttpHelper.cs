@@ -5,6 +5,7 @@ using System.Text;
 using System.Web;
 using System.Threading.Tasks;
 using System.IO;
+using MusicHelpers.Model;
 
 namespace MusicHelpers.Helpers
 {
