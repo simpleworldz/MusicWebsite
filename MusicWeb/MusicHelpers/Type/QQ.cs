@@ -22,7 +22,7 @@ namespace MusicHelpers.Type
         {
             vkey = GetVkey();
         }
-        //MC的方法
+        //MC的方法 获得会员的vkey
         public static string GetVkey()
         {
             using (WebClient wc = new WebClient())

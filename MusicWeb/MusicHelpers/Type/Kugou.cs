@@ -3,15 +3,21 @@ using MusicHelpers.Model;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 
 namespace MusicHelpers.Type
 {
-    class Kugou : Music
+   public class Kugou : Music,IMusicRAsync
     {
-        public static async Task<string> GetSongByIdRAsync(string id)
+        //添加会员登录后的cookie,下载高品质音乐及付费音乐
+        //public Kugou()
+        //{
+        //    HttpHelper.cookie.Add(new Uri("kugou.com"),new Cookie("name", "path"));
+        //}
+        public  async Task<string> GetSongByIdRAsync(string id)
         {
             HttpParams hp = new HttpParams()
             {
@@ -21,7 +27,7 @@ namespace MusicHelpers.Type
             };
             return await HttpHelper.GetAsync(hp);
         }
-        public static async Task<string> SearchRAsync(string name, int page)
+        public  async Task<string> SearchRAsync(string name, int page)
         {
             HttpParams hp = new HttpParams()
             {
@@ -36,7 +42,7 @@ namespace MusicHelpers.Type
             };
             return await HttpHelper.GetAsync(hp);
         }
-        public static async Task<string> GetLrcRAsync(string id)
+        public async Task<string> GetLrcRAsync(string id)
         {
             HttpParams hp = new HttpParams()
             {
@@ -88,7 +94,7 @@ namespace MusicHelpers.Type
             {
                 //{--}SQFileHash,HQFileHash,FileHash
                 //ids.Add(info["FileHash"].ToString());
-                //没有登录，即使..也..
+                //没有登录，即使用了HQ也返回的也是普通的  
                 ids.Add(info["HQFileHash"] == null || info["HQFileHash"].ToString().Equals("") ? info["FileHash"].ToString() : info["HQFileHash"].ToString());
             } 
             return GetSongsByIds(ids.ToArray());

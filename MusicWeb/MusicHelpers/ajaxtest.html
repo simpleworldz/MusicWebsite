@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<script src="jquery.min.js"></script>
+<script type="text/javascript">
+    $.ajax({
+        type: 'GET',
+        url : 'http://api.xiami.com/web',
+        timeout: 15000,
+        data: {
+            key: 'world',
+            v:'2.0',
+            app_key:'1',
+            r:'search/songs',
+            page: 1,
+            limit: 10
+        },
+        dataType: 'json'
+    })
+</script>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+
+</body>
+</html>

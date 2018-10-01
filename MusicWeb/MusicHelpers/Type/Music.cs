@@ -34,6 +34,11 @@ namespace MusicHelpers.Type
             {
                 return Call(kugou.Groups[1].Value, "kugou", "id");
             }
+            Match xiami = Regex.Match(url, "\\S+xiami.com\\S+/(\\d{5,})\\S*");
+                if (xiami.Success)
+            {
+                return Call(xiami.Groups[1].Value, "xiami", "id");
+            }
             return null;
 
         }
@@ -53,6 +58,9 @@ namespace MusicHelpers.Type
                     break;
                 case "kugou":
                     mh = new Kugou();
+                    break;
+                case "xiami":
+                    mh = new Xiami();
                     break;
             }
             switch(filter)
