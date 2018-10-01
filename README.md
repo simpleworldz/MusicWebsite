@@ -25,3 +25,4 @@ https://github.com/hxdnshx/XiamiFinder
 
 #### 附录
 * 无意中发现的免费下载 虾米（xiami）无损音质的方法  
+https://github.com/simpleworldz/MusicWebsite/blob/master/appendix/xiami/XiamiSQ.md
