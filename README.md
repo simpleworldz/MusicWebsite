@@ -1,13 +1,14 @@
 # MusicWebsite
 **asp.net core music website.**  
-https://github.com/maicong/music asp.net core 重构进行中...  
+https://github.com/maicong/music asp.net core 重构进行中...   
+加上一些自己的分析及想法
 
 ### 目前支持：  
 网易云音乐（netease)  QQ音乐  酷狗音乐 虾米音乐   
 
 ### 所支持音乐均含：  
-* 关键词，id，url搜索功能  
-* 歌词，封面搜索功能  
+* 关键词，id，url搜索及下载功能  
+* 歌词，封面搜索及下载功能  
 
 #### 说明：  
 QQ音乐支持高音质  
