@@ -18,7 +18,8 @@ namespace CoreMVC.Controllers
                 {"netease", "网易" },
                 { "qq", "ＱＱ"},
                 {"kugou", "酷狗"},
-                {"xiami","虾米" }
+                {"xiami","虾米" },
+                {"baidu", "百度" }
             };
             //musicTypeList.Add("kuwo", "酷我");
             //musicTypeList.Add("xiami", "虾米");

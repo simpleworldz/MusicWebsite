@@ -10,5 +10,7 @@ namespace MusicHelpers.Type
         Task<string> GetSongByIdRAsync(string id);
         Task<string> SearchRAsync(string name, int page);
         Task<string> GetLrcRAsync(string id);
+        Task<string> GetSongsByIdsRAsync(string[] ids);
+
     }
 }

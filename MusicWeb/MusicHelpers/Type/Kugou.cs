@@ -99,5 +99,10 @@ namespace MusicHelpers.Type
             } 
             return GetSongsByIds(ids.ToArray());
         }
+
+        public Task<string> GetSongsByIdsRAsync(string[] ids)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

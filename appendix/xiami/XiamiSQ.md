@@ -14,5 +14,5 @@
 
 **尝试过以抓取到的请求报文头及cookie发送请求，能用，但是第二天一早发现cookie过期了**  
 
-#### 3.从返回json数据中找到歌曲url，各种音质、格式的都有  
+#### 3.从返回json数据中找到歌曲url（客户端列表中的歌曲，各种音质、格式的都有）  
 <img src="https://github.com/simpleworldz/MusicWebsite/blob/master/appendix/xiami/3.PNG" />

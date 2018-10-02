@@ -35,9 +35,20 @@ namespace MusicHelpers.Type
                 return Call(kugou.Groups[1].Value, "kugou", "id");
             }
             Match xiami = Regex.Match(url, "\\S+xiami.com\\S+/(\\d{5,})\\S*");
-                if (xiami.Success)
+            if (xiami.Success)
             {
                 return Call(xiami.Groups[1].Value, "xiami", "id");
+            }
+            http://music.taihe.com/song/751126?pst=sug
+            Match baidu1 = Regex.Match(url, "\\S+taihe.com\\S+/(\\d+)\\S*");
+            if (baidu1.Success)
+            {
+                return Call(baidu1.Groups[1].Value, "baidu", "id");
+            }
+            Match baidu2 = Regex.Match(url, "\\S+baidu.com\\S+/(\\d+)\\S*");
+            if (baidu2.Success)
+            {
+                return Call(baidu2.Groups[1].Value, "baidu", "id");
             }
             return null;
 
@@ -61,6 +72,9 @@ namespace MusicHelpers.Type
                     break;
                 case "xiami":
                     mh = new Xiami();
+                    break;
+                case "baidu":
+                    mh = new Baidu();
                     break;
             }
             switch(filter)

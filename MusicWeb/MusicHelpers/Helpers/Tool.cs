@@ -17,12 +17,22 @@ namespace MusicHelpers.Helpers
         /// <returns></returns>
         public static string Merge(JToken jt,string key,string cKey,string connect = ",")
         {
-            string res = "";
+            StringBuilder sb = new StringBuilder();
             foreach (var value in jt[key].Children())
             {
-                res += value[cKey].ToString() + ",";
+                sb.Append(value[cKey].ToString() + connect);
             }
-            return res.Substring(0, res.Length - 1);
+            return sb.ToString().Substring(0, sb.Length - 1);
+        }
+        public static string Merge(string[] ids,string connect = ",")
+        {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < ids.Length - 1; i++)
+            {
+                sb.Append(ids[i] + connect);
+            }
+          sb.Append(ids[ids.Length - 1]);
+            return sb.ToString();
         }
     }
 }

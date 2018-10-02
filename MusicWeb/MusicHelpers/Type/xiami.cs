@@ -37,7 +37,7 @@ namespace MusicHelpers.Type
             //mis.Add(GetSongInfo(info));
             foreach (var song in jo["data"]["trackList"])
             {
-                var lrcA = GetLrcRAsync(song["lyric"].Value<string>());
+                var getLrc = GetLrcRAsync(song["lyric"].Value<string>());
                 mis.Add(
                     new MusicInfo()
                     {//还是用.Value<string>()吧
@@ -48,7 +48,7 @@ namespace MusicHelpers.Type
                         author = song["singers"].Value<string>(),
                         url = HigherQ(XiamiUrlDecode(song["location"].Value<string>())),
                         pic = song["album_pic"].Value<string>(),
-                        lrc = lrcA.Result
+                        lrc = getLrc.Result
                     });
             }
             return mis.Count > 0? mis.ToArray():null;
@@ -109,7 +109,7 @@ namespace MusicHelpers.Type
             //var ss = jo["data"][key];
             //foreach (var info in jo["data"][key])
             //{
-            var lrcA = GetLrcRAsync(info["lyric"].Value<string>());
+            var getLrc = GetLrcRAsync(info["lyric"].Value<string>());
             return new MusicInfo()
             {
                 type = "xiami",
@@ -120,7 +120,7 @@ namespace MusicHelpers.Type
                 url = HigherQ(info["listen_file"].ToString()),
                 pic = info["album_logo"].ToString(),
                 //pic = info["album_logo"].ToString(),
-                lrc = lrcA.Result
+                lrc = getLrc.Result
             };
             //}
             //return mis.ToArray();
@@ -199,6 +199,11 @@ namespace MusicHelpers.Type
             if (!ret.StartsWith("http:"))
                 ret = "http:" + ret;
             return ret;
+        }
+
+        public Task<string> GetSongsByIdsRAsync(string[] ids)
+        {
+            throw new NotImplementedException();
         }
     }
 }
