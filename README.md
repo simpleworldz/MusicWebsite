@@ -1,6 +1,6 @@
 # MusicWebsite
 **asp.net core music website.**  
-https://github.com/maicong/music (php) asp.net core 重构进行中...   
+https://github.com/maicong/music (php) asp.net core 重构   
 加上一些自己的分析及想法
 
 ### 目前支持：  
