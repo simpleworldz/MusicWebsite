@@ -87,8 +87,8 @@ namespace MusicHelpers
             //mh.GetSongById("63414fd91ac2ef376cdd574209a5bf5e");
             // mh.Search("63414fd91ac2ef376cdd574209a5bf5e", 1);
             // string str = Kugou.GetLrcR("08228af3cb404e8a4e7e9871bf543ff6").Result;
-            //mh = new Xiami();
-            //mh.Search("211324832", 1);
+             mh = new Xiami();
+            mh.Search("五月天", 1);
             //mh.GetSongById("211324832");
             // HttpParams hp = new HttpParams()
             // {
@@ -96,8 +96,8 @@ namespace MusicHelpers
             // };
             //string str =  HttpHelper.GetAsync(hp, "").Result;
             #endregion  
-            mh = new Baidu();
-            mh.Search("五月天", 1);
+            //mh = new Baidu();
+            //mh.Search("五月天", 1);
             //mh.GetSongsByIds(new string[] {  "266069" });
         }
     }

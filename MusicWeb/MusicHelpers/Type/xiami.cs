@@ -37,7 +37,12 @@ namespace MusicHelpers.Type
             //mis.Add(GetSongInfo(info));
             foreach (var song in jo["data"]["trackList"])
             {
-                var getLrc = GetLrcRAsync(song["lyric"].Value<string>());
+                string lrcStr = song["lyric"].Value<string>();
+                Task<string> getLrc = null;
+                if (!lrcStr.Equals(""))
+                {
+                    getLrc = GetLrcRAsync(lrcStr);
+                }
                 mis.Add(
                     new MusicInfo()
                     {//还是用.Value<string>()吧
@@ -48,7 +53,7 @@ namespace MusicHelpers.Type
                         author = song["singers"].Value<string>(),
                         url = HigherQ(XiamiUrlDecode(song["location"].Value<string>())),
                         pic = song["album_pic"].Value<string>(),
-                        lrc = getLrc.Result
+                        lrc = getLrc != null ? getLrc.Result : ""
                     });
             }
             return mis.Count > 0? mis.ToArray():null;
@@ -109,7 +114,12 @@ namespace MusicHelpers.Type
             //var ss = jo["data"][key];
             //foreach (var info in jo["data"][key])
             //{
-            var getLrc = GetLrcRAsync(info["lyric"].Value<string>());
+            string lrcStr = info["lyric"].Value<string>();
+            Task<string> getLrc = null; 
+            if (!lrcStr.Equals(""))
+            {
+                getLrc = GetLrcRAsync(lrcStr);
+            }
             return new MusicInfo()
             {
                 type = "xiami",
@@ -120,10 +130,10 @@ namespace MusicHelpers.Type
                 url = HigherQ(info["listen_file"].ToString()),
                 pic = info["album_logo"].ToString(),
                 //pic = info["album_logo"].ToString(),
-                lrc = getLrc.Result
+                lrc = getLrc != null ? getLrc.Result : ""
             };
             //}
-            //return mis.ToArray();
+           // return mis.ToArray();
         }
         public override MusicInfo[] GetSongsByIds(string[] ids)
         {
